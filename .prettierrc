@@ -1,0 +1,15 @@
+{
+  "semi": true,
+  "printWidth": 120,
+  "tabWidth": 2,
+  "singleQuote": false,
+  "bracketSpacing": true,
+  "useTabs": false,
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderCaseInsensitive": true,
+  "arrowParens": "always",
+  "jsxSingleQuote": true,
+  "trailingComma": "all",
+  "endOfLine": "auto"
+}
