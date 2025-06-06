@@ -16,3 +16,8 @@ export const VALIDATION_TEXT = {
     message: "Необходимо ввести 2 или более символа",
   },
 };
+
+export const REQUIRED = {
+  value: true,
+  message: "Обязательное поле для заполнения",
+};

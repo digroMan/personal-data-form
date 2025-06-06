@@ -3,3 +3,8 @@
     flex-direction: column;
     align-items: start;
 }
+
+.input{
+    display: flex;
+    flex-direction: column;
+}
