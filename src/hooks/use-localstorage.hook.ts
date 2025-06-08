@@ -1,28 +1,36 @@
 import { useState, useEffect } from 'react';
 import type { IFormInput } from '../components/Form/types';
+import type { TUseLocalStorage } from "./types";
 
-export function useLocalStorage(key: string) {
-	const [data, setData] = useState<Partial<IFormInput>>();
-	useEffect(() => {
-		const json = localStorage.getItem(key);
-		let res;
-		try {
-			if(!json) throw 'Записей в localStorage нет';
-			res = JSON.parse(json);
-		} catch (error) {
-			console.log(error);
-		}
-		
-		if(res){
-			setData(res);
-		}
-	}, []);
+export function useLocalStorage(key: string): TUseLocalStorage {
+  const [data, setData] = useState<Partial<IFormInput>>();
+  useEffect(() => {
+    const json = localStorage.getItem(key);
+    if (!json) return;
 
-	const saveData = (newData: IFormInput) => {
-		// if(!newData.length) return;
-		localStorage.setItem(key, JSON.stringify(newData));
-		setData(newData);
-	};
+    try {
+      const parsed = JSON.parse(json);
+      setData(parsed);
+    } catch (error) {
+      console.log(`Ошибка парсинга данных из localStorage по ключу ${key}, ${error}`);
+    }
+  }, [key]);
 
-	return [data, saveData];
+  const saveData = (newData: Partial<IFormInput>) => {
+    const json = localStorage.getItem(key);
+    const parsed = json ? JSON.parse(json) : null;
+
+    try {
+      if (JSON.stringify(parsed) !== JSON.stringify(newData)) {
+        localStorage.setItem(key, JSON.stringify(newData));
+        setData(newData);
+      }
+    } catch (error) {
+      console.log(`Ошибка парсинга данных из localStorage по ключу ${key}, ${error}`);
+    }
+  };
+
+  const clearData = () => localStorage.removeItem(key);
+
+  return [data, saveData, clearData];
 }

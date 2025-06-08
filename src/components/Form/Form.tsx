@@ -16,21 +16,21 @@ export const Form = ({
     register,
     handleSubmit,
     reset,
-    formState: { errors, dirtyFields },
+    formState: { errors },
     watch,
   } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
-  };
+
+  const onSubmit: SubmitHandler<IFormInput> = () => reset();
 
   useEffect(() => {
-    console.log(formData);
     reset(formData);
-  }, []);
+  }, [formData]);
 
   useEffect(() => {
-    if (!dirtyFields) return;
-    watch((data) => setFormData(data));
+    watch((data) => {
+      const hasValues = Object.values(data).some((value) => value);
+      if (hasValues) setFormData(data);
+    });
   }, [watch]);
 
   return (
@@ -70,7 +70,7 @@ export const Form = ({
           </InputWrapper>
         );
       })}
-      <input type='submit' value='Отправить персональные данные' />
+      <input type='submit' value='Сохранить' />
     </form>
   );
 };

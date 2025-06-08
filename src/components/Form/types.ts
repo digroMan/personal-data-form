@@ -6,8 +6,9 @@ export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   textValidation: Pick<RegisterOptions, "minLength" & "pattern">;
   handleAgeValidation: Validate<string, IFormInput>;
   requiredSettings: RegisterOptions["required"];
-  formData?: IFormInput;
-  setFormData: () => void;
+  formData?: Partial<IFormInput>;
+  setFormData: (key: Partial<IFormInput>) => void;
+  clearFormData?: () => void;
 }
 
 export type TFormField = "firstName" | "lastName" | "familyName" | "birthDate" | "gender";
