@@ -27,11 +27,41 @@ export const Form = ({
   }, [formData]);
 
   useEffect(() => {
-    watch((data) => {
+    const subscription = watch((data) => {
       const hasValues = Object.values(data).some((value) => value);
       if (hasValues) setFormData(data);
     });
+
+    return () => subscription.unsubscribe();
   }, [watch]);
+
+  const newInput = (name: TFormField) => {
+    switch (name) {
+      case "birthDate":
+        return <input type='date' {...register(name, { validate: handleAgeValidation })} className={styles.input} />;
+      case "gender":
+        return (
+          <>
+            <label>
+              Мужчина
+              <input type='radio' value='male' {...register(name, { required: requiredSettings })} />
+            </label>
+            <label>
+              Женщина
+              <input type='radio' value='female' {...register(name, { required: requiredSettings })} />
+            </label>
+          </>
+        );
+      default:
+        return (
+          <input
+            type='text'
+            {...register(name, { ...textValidation, required: requiredSettings })}
+            className={styles.input}
+          />
+        );
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -41,32 +71,7 @@ export const Form = ({
 
         return (
           <InputWrapper key={index} labelTitle={label} errorMessage={errors[inputName]?.message}>
-            {inputType === "text" && (
-              <input
-                type={inputType}
-                {...register(inputName, { ...textValidation, required: requiredSettings })}
-                className={styles.input}
-              />
-            )}
-            {inputType === "date" && (
-              <input
-                type={inputType}
-                {...register(inputName, { validate: handleAgeValidation })}
-                className={styles.input}
-              />
-            )}
-            {inputType === "radio" && (
-              <>
-                <label>
-                  Мужчина
-                  <input type={inputType} value='male' {...register(inputName, { required: requiredSettings })} />
-                </label>
-                <label>
-                  Женщина
-                  <input type={inputType} value='female' {...register(inputName, { required: requiredSettings })} />
-                </label>
-              </>
-            )}
+            {newInput(key)}
           </InputWrapper>
         );
       })}
