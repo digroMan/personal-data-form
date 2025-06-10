@@ -1,11 +1,7 @@
 import type { FormHTMLAttributes } from "react";
-import type { RegisterOptions, Validate } from "react-hook-form";
 
 export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   labels: { [key: string]: string };
-  textValidation: Pick<RegisterOptions, "minLength" & "pattern">;
-  handleAgeValidation: Validate<string, IFormInput>;
-  requiredSettings: RegisterOptions["required"];
   formData?: Partial<IFormInput>;
   setFormData: (key: Partial<IFormInput>) => void;
   clearFormData?: () => void;
