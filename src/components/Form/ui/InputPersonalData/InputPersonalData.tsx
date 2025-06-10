@@ -1,7 +1,7 @@
 import type { InputProps } from "./types";
-import styles from "./Input.module.css";
+import styles from "./InputPersonalData.module.css";
 
-export const Input = ({ name, configuration }: InputProps) => {
+export const InputPersonalData = ({ name, configuration }: InputProps) => {
   switch (name) {
     case "birthDate":
       return <input type='date' {...configuration(name)} className={styles.input} />;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { IFormInput } from '../components/Form/types';
+import type { IFormInput } from "../components/Form/types";
 import type { TUseLocalStorage } from "./types";
 
 export function useLocalStorage(key: string): TUseLocalStorage {
