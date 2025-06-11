@@ -6,31 +6,25 @@ import { useEffect } from "react";
 import { InputPersonalData } from "./ui/InputPersonalData/InputPersonalData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "./lib/validation";
+import { useLocalStorage } from "../../hooks/use-localstorage.hook";
 
-export const Form = ({ labels, formData, setFormData }: FormProps) => {
+export const Form = ({ labels, localStorageKey }: FormProps) => {
+  const [getStorage, setItemStorage] = useLocalStorage(localStorageKey);
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
     watch,
   } = useForm<TFormValues>({
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = () => reset();
-
-  useEffect(() => {
-    console.log("first");
-    console.log(formData);
-    // reset(formData);
-  }, []);
+  const onSubmit: SubmitHandler<IFormInput> = () => console.log(getStorage);
 
   useEffect(() => {
     const subscription = watch((data) => {
-      console.log("hi");
       const hasValues = Object.values(data).some((value) => value);
-      if (hasValues) setFormData(data);
+      if (hasValues) setItemStorage(data);
     });
 
     return () => subscription.unsubscribe();

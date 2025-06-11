@@ -4,9 +4,7 @@ import type { z } from "zod";
 
 export interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
   labels: { [key: string]: string };
-  formData?: Partial<IFormInput>;
-  setFormData: (key: Partial<IFormInput>) => void;
-  clearFormData?: () => void;
+  localStorageKey: string;
 }
 
 export type TFormField = "firstName" | "lastName" | "familyName" | "birthDate" | "gender";

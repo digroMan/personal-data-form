@@ -5,3 +5,8 @@ export const LABELS = {
   birthDate: "Дата рождения",
   gender: "Пол",
 };
+
+export const GENDER = [
+  { name: "Мужчина", value: "male" },
+  { name: "Женщина", value: "female" },
+];
